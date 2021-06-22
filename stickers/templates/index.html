@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dev.finance$</title>
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="icon" href="{% static 'assets/Sticker.png' %}" type="image/png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <img src="{% static './assets/logo.svg' %}" alt="Logo Dev Finance">
+    </header>
+
+    <main class="container">
+        <section id="balance">
+            <h2 class="sr-only">Balanço</h2>
+
+            <div class="card">
+                <h3>
+                    <span>Valor Recuperado</span>
+                    <img src="{% static './assets/income.svg' %}" alt="Image de entradas">
+                </h3>
+                <p>R$ 5.000,00</p>
+            </div>
+            <div class="card">
+                <h3>
+                    <span>Valor Investido</span>
+                    <img src="{% static './assets/expense.svg' %}" alt="Image de saidas">
+                </h3>
+                <p>R$ 2.000,00</p>
+            </div>
+            <div class="card total">
+                <h3>
+                    <span>Total</span>
+                    <img src="{% static './assets/total.svg' %}" alt="Image de total">
+                </h3>
+                <p>{{ total }}</p>
+            </div>
+        </section>
+
+        <section id="transaction">
+            <h2 class="sr-only">Transações</h2>
+
+            <a href="#" onclick="Modal.open()" class="button new">+ Nova Venda</a>
+
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Data venda</th>
+                        <th>Quantidade vendidos</th>
+                        <th>Valor Unidade</th>
+                        <th>Valor total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sticker in stickers %}
+                        <tr>
+                            <td class="description">{{ sticker.data_venda }}</td>
+                            <td class="expense">{{ sticker.quantidade_vendidos }}</td>
+                            <td class="description">R$ {{ sticker.valor_unidade }}</td>
+                            <td class="description">{{ sticker.valor_total }}</td>
+                            <td>
+                                <a href="{% url 'excluir_venda' sticker.id %}">
+                                    <img src="{% static './assets/minus.svg' %}" alt="Remover venda">
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div class="modal-overlay">
+        <div class="modal">
+            <div id="form">
+
+                <h2>Nova Venda</h2>
+
+                <form method="POST">{% csrf_token %}
+                    <div class="input-group">
+                        <label class="sr-only" for="description">Quantidade vendidos</label>
+                        {{ form.quantidade_vendidos }}
+                    </div>
+
+                    <div class="input-group">
+                        <label class="sr-only" for="amount">Valor por unidade</label>
+                        {{ form.valor_unidade }}
+                        <small class="help">Use o sinal - (negativo) para despesas e , (virgula) para casas decimais</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="sr-only" for="date">Data venda</label>
+                        {{ form.data_venda }}
+                    </div>
+
+                    <div class="input-group actions">
+                        <a onclick="Modal.close()" href="" class="button cancel">Cancelar</a>
+                        <button type="submit">Salvar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>dev.finance$</p>
+    </footer>
+
+    <script>
+        const Modal = {
+            open() {
+                document.querySelector('.modal-overlay').classList.add('active')
+            },
+            close() {
+                document.querySelector('.modal-overlay').classList.remove('active')
+            }
+        }
+    </script>
+
+</body>
+</html>
