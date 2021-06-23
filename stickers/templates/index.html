@@ -26,24 +26,30 @@
 
             <div class="card">
                 <h3>
-                    <span>Valor Recuperado</span>
+                    <span>Stickers em Estoque</span>
                     <img src="{% static './assets/income.svg' %}" alt="Image de entradas">
                 </h3>
-                <p>R$ 5.000,00</p>
+                <p>450</p>
             </div>
             <div class="card">
                 <h3>
-                    <span>Valor Investido</span>
+                    <span>Stickers Vendidos</span>
                     <img src="{% static './assets/expense.svg' %}" alt="Image de saidas">
                 </h3>
-                <p>R$ 2.000,00</p>
+                <p>17</p>
             </div>
             <div class="card total">
                 <h3>
-                    <span>Total</span>
+                    <span>Total Vendidos</span>
                     <img src="{% static './assets/total.svg' %}" alt="Image de total">
                 </h3>
-                <p>{{ total }}</p>
+                <p>
+                    {% if valor_total == None %}
+                        Zero!!
+                    {% else %}
+                        R$ {{ valor_total }}
+                    {% endif %}
+                </p>
             </div>
         </section>
 
@@ -68,7 +74,7 @@
                             <td class="description">{{ sticker.data_venda }}</td>
                             <td class="expense">{{ sticker.quantidade_vendidos }}</td>
                             <td class="description">R$ {{ sticker.valor_unidade }}</td>
-                            <td class="description">{{ sticker.valor_total }}</td>
+                            <td class="description">R$ {{ sticker.valor_total }}</td>
                             <td>
                                 <a href="{% url 'excluir_venda' sticker.id %}">
                                     <img src="{% static './assets/minus.svg' %}" alt="Remover venda">
@@ -86,6 +92,16 @@
             <div id="form">
 
                 <h2>Nova Venda</h2>
+
+                {% if form.errors %}
+                    {% for field in form %}
+
+                        {% for error in field.errors %}
+                                {{field.label}}: {{ error|escape }}
+                        {% endfor %}
+
+                    {% endfor %}
+                {% endif %}
 
                 <form method="POST">{% csrf_token %}
                     <div class="input-group">
@@ -105,7 +121,7 @@
                     </div>
 
                     <div class="input-group actions">
-                        <a onclick="Modal.close()" href="" class="button cancel">Cancelar</a>
+                        <a onclick="Modal.close()" class="button cancel">Cancelar</a>
                         <button type="submit">Salvar</button>
                     </div>
 
