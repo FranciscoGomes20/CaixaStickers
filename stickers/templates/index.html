@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="pt-br">
 <head>
 
@@ -7,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dev.finance$</title>
+    <title>Dev.Sticker$</title>
 
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="icon" href="{% static 'assets/Sticker.png' %}" type="image/png">
@@ -26,18 +25,26 @@
 
             <div class="card">
                 <h3>
-                    <span>Stickers em Estoque</span>
+                    <span>Stickers em estoque</span>
                     <img src="{% static './assets/income.svg' %}" alt="Image de entradas">
                 </h3>
-                <p>450</p>
+                <p>{{ total_estoque }}</p>
             </div>
+
             <div class="card">
                 <h3>
                     <span>Stickers Vendidos</span>
                     <img src="{% static './assets/expense.svg' %}" alt="Image de saidas">
                 </h3>
-                <p>17</p>
+                <p>
+                    {% if quantidade_vendidos == None %}
+                        Zero!!
+                    {% else %}
+                        {{ quantidade_vendidos }}
+                    {% endif %}
+                </p>
             </div>
+            
             <div class="card total">
                 <h3>
                     <span>Total Vendidos</span>
@@ -56,14 +63,14 @@
         <section id="transaction">
             <h2 class="sr-only">Transações</h2>
 
-            <a href="#" onclick="Modal.open()" class="button new">+ Nova Venda</a>
+            <a onclick="Modal.open()" class="button new">+ Nova Venda</a>
 
             <table id="data-table">
                 <thead>
                     <tr>
                         <th>Data venda</th>
                         <th>Quantidade vendidos</th>
-                        <th>Valor Unidade</th>
+                        <th>Valor por unidade</th>
                         <th>Valor total</th>
                         <th></th>
                     </tr>
@@ -110,9 +117,8 @@
                     </div>
 
                     <div class="input-group">
-                        <label class="sr-only" for="amount">Valor por unidade</label>
+                        <label class="sr-only" for="description">Valor por unidade</label>
                         {{ form.valor_unidade }}
-                        <small class="help">Use o sinal - (negativo) para despesas e , (virgula) para casas decimais</small>
                     </div>
 
                     <div class="input-group">
@@ -124,14 +130,13 @@
                         <a onclick="Modal.close()" class="button cancel">Cancelar</a>
                         <button type="submit">Salvar</button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>dev.finance$</p>
+        <p>dev.Sticker$</p>
     </footer>
 
     <script>
