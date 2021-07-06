@@ -196,6 +196,11 @@ td.expense {
     color: #e92929;
 }
 
+td {
+    text-align: center; 
+    vertical-align: middle;
+}
+
 /* ++++++++ Modal ++++++++ */
 .modal-overlay {
     width: 100%;
