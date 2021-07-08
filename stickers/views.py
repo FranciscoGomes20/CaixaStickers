@@ -24,9 +24,15 @@ def index(request):
             return redirect('index')
     else:
         form = StickerForm()
-    return render(request, 'index.html', {'stickers': stickers, 'form':form, 'valor_total':valor_total, 'quantidade_vendidos':quantidade_vendidos, 'total_estoque':total_estoque})
+    return render(request, 'index.html', {
+        'stickers': stickers, 
+        'form':form, 
+        'valor_total':valor_total, 
+        'quantidade_vendidos':quantidade_vendidos, 
+        'total_estoque':total_estoque
+    })
 
-def excluir_venda(request, id_sticker):
+def excluir_venda(id_sticker):
     venda_stickers = CaixaStickers.objects.get(pk=id_sticker)
     venda_stickers.delete()
     return redirect('index')

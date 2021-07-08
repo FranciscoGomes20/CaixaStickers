@@ -9,4 +9,3 @@ class CaixaStickers(models.Model):
 
     def __str__(self):
         return "Stickers vendidos {}".format(self.data_venda)
-
