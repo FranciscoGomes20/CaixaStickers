@@ -52,6 +52,10 @@ a {
     text-decoration: none;
 }
 
+.button.new.logout {
+    float: right;
+}
+
 a:hover {
     color: var(--light-green);
 }
