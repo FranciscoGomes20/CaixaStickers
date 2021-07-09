@@ -3,13 +3,15 @@ from django.shortcuts import redirect
 from django.db.models import Sum
 from .models import CaixaStickers
 from .forms import StickerForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def index(request):
+    stickers = CaixaStickers.objects.all()
     valor_total = CaixaStickers.objects.all().aggregate(valor_total = Sum('valor_total')).get('valor_total')
     quantidade_vendidos = CaixaStickers.objects.all().aggregate(quantidade_vendidos = Sum('quantidade_vendidos')).get('quantidade_vendidos')
     total_estoque = 468 - quantidade_vendidos
-    stickers = CaixaStickers.objects.all()
     stickers = reversed(stickers)
 
     if request.method == "POST":
@@ -24,6 +26,7 @@ def index(request):
             return redirect('index')
     else:
         form = StickerForm()
+
     return render(request, 'index.html', {
         'stickers': stickers, 
         'form':form, 
@@ -32,6 +35,7 @@ def index(request):
         'total_estoque':total_estoque
     })
 
+@login_required
 def excluir_venda(id_sticker):
     venda_stickers = CaixaStickers.objects.get(pk=id_sticker)
     venda_stickers.delete()
