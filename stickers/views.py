@@ -36,3 +36,6 @@ def excluir_venda(id_sticker):
     venda_stickers = CaixaStickers.objects.get(pk=id_sticker)
     venda_stickers.delete()
     return redirect('index')
+
+def login(request):
+    return render(request, 'login.html')
