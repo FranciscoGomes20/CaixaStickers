@@ -8,4 +8,10 @@ class CaixaStickers(models.Model):
     valor_total = models.DecimalField(max_digits=10 ,default=0, decimal_places=2)
 
     def __str__(self):
-        return "Stickers vendidos {}".format(self.data_venda)
+        return "{}".format(self.data_venda)
+
+class TotalStickers(models.Model):
+    stickers_total = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "{}".format(self.stickers_total)

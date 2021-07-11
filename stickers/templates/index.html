@@ -28,7 +28,10 @@
                     <span>Stickers em estoque</span>
                     <img src="{% static './assets/income.svg' %}" alt="Image de entradas">
                 </h3>
-                <p>{{ total_estoque }}</p>
+                <div class="novo-estoque">
+                    <p>{{ total_estoque }}</p>
+                    <a onclick="ModalEstoque.open()" href="#" class="card-link"><h1>Novo</h1></a>
+                </div>
             </div>
 
             <div class="card">
@@ -81,7 +84,7 @@
                     {% for sticker in stickers %}
                         <tr>
                             <td class="description">{{ sticker.data_venda }}</td>
-                            <td class="expense">{{ sticker.quantidade_vendidos }}</td>
+                            <td class="income">{{ sticker.quantidade_vendidos }}</td>
                             <td class="description">R$ {{ sticker.valor_unidade }}</td>
                             <td class="description">R$ {{ sticker.valor_total }}</td>
                             <td>
@@ -100,7 +103,7 @@
         <div class="modal">
             <div id="form">
 
-                <h2>Nova Venda</h2>
+                <h2>Cadastrar nova venda</h2>
 
                 {% if form.errors %}
                     {% for field in form %}
@@ -130,7 +133,37 @@
 
                     <div class="input-group actions">
                         <a onclick="Modal.close()" href class="button cancel">Cancelar</a>
-                        <button type="submit">Salvar</button>
+                        <button type="submit" name="venda">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal2">
+        <div class="modal">
+            <div id="form">
+
+                <h2>Novo valor de estoque</h2>
+
+                {% if form.errors %}
+                    {% for field in form %}
+
+                        {% for error in field.errors %}
+                                {{field.label}}: {{ error|escape }}
+                        {% endfor %}
+
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">{% csrf_token %}
+                    <div class="input-group">
+                        <label class="sr-only" for="description">Valor estoque</label>
+                        <input type="number" name="estoque-quantidade" id="description" placeholder="Digite Valor">
+                    </div>
+                    <div class="input-group actions">
+                        <a onclick="Modal.close()" href class="button cancel">Cancelar</a>
+                        <button type="submit" name="estoque">Salvar</button>
                     </div>
                 </form>
             </div>
@@ -148,6 +181,14 @@
             },
             close() {
                 document.querySelector('.modal-overlay').classList.remove('active')
+            }
+        }
+        const ModalEstoque = {
+            open() {
+                document.querySelector('#modal2').classList.add('active')
+            },
+            close() {
+                document.querySelector('#modal2').classList.remove('active')
             }
         }
     </script>

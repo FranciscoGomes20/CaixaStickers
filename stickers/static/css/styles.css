@@ -52,6 +52,17 @@ a {
     text-decoration: none;
 }
 
+h1 {
+    margin-top: 16%;
+}
+
+.novo-estoque {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.3rem;
+}
+
 .button.new.logout {
     float: right;
 }
@@ -197,7 +208,7 @@ td.income {
 }
 
 td.expense {
-    color: #e92929;
+    color: var(--green);
 }
 
 td {
