@@ -1,9 +1,9 @@
 from django import forms
-from .models import CaixaStickers
+from .models import CaixaSticker
 
 class StickerForm(forms.ModelForm):
     class Meta:
-        model = CaixaStickers
+        model = CaixaSticker
         fields = ('data_venda', 'quantidade_vendidos', 'valor_unidade')
         widgets = {
             'quantidade_vendidos': forms.NumberInput(
