@@ -47,7 +47,7 @@
                     {% endif %}
                 </p>
             </div>
-            
+
             <div class="card total">
                 <h3>
                     <span>Total Vendidos</span>
@@ -66,9 +66,19 @@
         <section id="transaction">
             <h2 class="sr-only">Transações</h2>
 
-            <a onclick="Modal.open()" href="#" class="button new">+ Nova Venda</a>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <div class="error">{{ message }}</div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <a onclick="Modal.open()" href="#" class="button new">+ Nova Venda</a>
+            {% endif %}
 
-            <a class="button new logout" href="/accounts/logout">Logout</a>
+            {{ request.user }}
+
+            <a class="button new logout" href="{% url 'logout' %}">Logout</a>
 
             <table id="data-table">
                 <thead>
